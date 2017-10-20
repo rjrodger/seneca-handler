@@ -24,6 +24,7 @@
   "devDependencies": {
     "code": "^4.1.0",
     "lab": "^14.3.1",
+    "nid": "^0.3.2",
     "prettier": "^1.7.4",
     "seneca": "^3.4.3"
   }
