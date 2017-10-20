@@ -1,5 +1,5 @@
 {
-  "name": "handler",
+  "name": "seneca-handler",
   "version": "0.0.1",
   "description": "Seneca browser message bridge - server-side handler.",
   "main": "handler.js",
