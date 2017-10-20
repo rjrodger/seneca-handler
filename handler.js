@@ -26,14 +26,18 @@ module.exports = function handler(options) {
   function hook_listen_browser(msg, reply) {
     var seneca = this
 
-    var pin = 'string' == typeof msg.pin ? Jsonic(msg.pin) : msg.pin
+    var pins = Array.isArray(msg.pin) ? msg.pin : [msg.pin]
 
-    // TODO: should use optioner
-    if (null == pin || 0 == Object.keys('object' == typeof pin ? pin : {}).length) {
-      return reply(new Error('pin required'))
-    }
+    pins.forEach(function(pin) {
+      pin = 'string' == typeof pin ? Jsonic(pin) : pin
 
-    allow.add(pin,true)
+      // TODO: should use optioner
+      if (null == pin || 0 == Object.keys('object' == typeof pin ? pin : {}).length) {
+        return reply(new Error('pin required'))
+      }
+
+      allow.add(pin,true)
+    })
     
     reply()
   }
@@ -49,6 +53,11 @@ module.exports = function handler(options) {
       msg.__safe__ = false
       
       action_seneca.act(msg, function (err, out, meta) {
+        // TODO: make configurable
+        if(err) {
+          err.stack = null
+        }
+
         respond(tu.externalize_reply(this, err, out, meta))
       })
     }
